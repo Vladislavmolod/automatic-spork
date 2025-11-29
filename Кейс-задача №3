@@ -1,0 +1,83 @@
+Структура проекта
+greeting_project/
+│
+├── greeting_project/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── greeting_app/
+│   ├── migrations/
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   └── admin.py
+│
+├── templates/
+│   └── greeting_app/
+│       └── home.html
+│
+└── static/
+    └── style.css
+1.
+settings.py
+# greeting_project/settings.py
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+SECRET_KEY = 'your-secret-key'
+DEBUG = True
+ALLOWED_HOSTS = []
+
+INSTALLED_APPS = [
+    'django.contrib.contenttypes',
+    'django.contrib.staticfiles',
+    'greeting_app',
+]
+
+MIDDLEWARE = []
+
+ROOT_URLCONF = 'main'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {},
+    },
+]
+
+WSGI_APPLICATION = 'wsgi.application'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+2.
+urls.py
+(в корне проекта)
+# main/urls.py
+from django.contrib import admin
+from django.urls import path
+from greeting_app import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+]
+3.
+wsgi.py
+(в корне проекта)
+# wsgi.py
+import os
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'greeting_project.settings')
+application = get_wsgi_application()
+4. `models.py
